@@ -1,2 +1,3 @@
 # AtrialMorphNet
-Architecture presented at CinC 2026: “Modeling atrial shape morphology via 3D point cloud β-VAE”
+AtrialMorphNet is a β-VAE for the representation of 3D
+left atrial point cloud The architecture combines a graph-based encoder with PointNet-based layers, dynamic edge convolution, and a hierarchical folding-based decoder that reconstructs the final anatomical point cloud.
