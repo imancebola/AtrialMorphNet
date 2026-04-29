@@ -22,7 +22,7 @@ def chamfer_loss_l2_sqr(recon, x):
     return loss_cd
 
 
-def vae_loss_tnet(recon, x, mu, logvar, trans_feat=None, beta=0.001, recon_weight = 1, device = None): 
+def vae_loss(recon, x, mu, logvar, beta=0.001, recon_weight = 1, device = None): 
     
     recon_loss = chamfer_loss_l2_sqr(recon,x) * recon_weight     
   
@@ -32,19 +32,15 @@ def vae_loss_tnet(recon, x, mu, logvar, trans_feat=None, beta=0.001, recon_weigh
     
     return total_loss, recon_loss.item(), kl.item(), reg.item() , repul_loss.item()
 
-###### VAE WITH T-NETS ###s
-class PointCloudVAE(nn.Module):
-    def __init__(self, latent_dim=128, num_points=2048, use_tnet=False):
+###### VAE WITH T-NETS ###
+class AtrialMorphNet(nn.Module):
+    def __init__(self, latent_dim=128, num_points=2048):
         super().__init__()
     
-        self.encoder = GraphPointNetVAEEncoder_con_t_net_max_mean_pooling(latent_dim)
+        self.encoder = GraphPointNetVAEEncoder_max_mean_pooling(latent_dim)
         self.decoder = FoldingDecoderCoarseToDense(latent_dim)
-     
-
         self.latent_dim = latent_dim
-        self.use_tnet = use_tnet
-        self.decoder_type = decoder_type
-        
+    
     def reparameterize(self, mu, logvar):
         std = torch.exp(0.5 * logvar)
         eps = torch.randn_like(std)
