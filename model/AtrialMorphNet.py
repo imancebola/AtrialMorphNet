@@ -32,7 +32,7 @@ def vae_loss(recon, x, mu, logvar, beta=0.001, recon_weight = 1, device = None):
     
     return total_loss, recon_loss.item(), kl.item(), reg.item() , repul_loss.item()
 
-###### VAE WITH T-NETS ###
+###### AtrialMorphNet  ###
 class AtrialMorphNet(nn.Module):
     def __init__(self, latent_dim=128, num_points=2048):
         super().__init__()
