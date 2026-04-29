@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from AtrialMorphNet.model.AtrialMorphNet import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Usando dispositivo: {device}")
+print(f"Using device: {device}")
 
 latent_dim = 256
 num_points = 2048
@@ -19,14 +19,14 @@ results_path = "" # Path to saved test results
 test_output_path = os.path.join(results_path, "test_best")
 latent_dir = os.path.join(test_output_path, "latent_vectors")
 
-best_model_path = os.path.join(results_path, "best_model.pth") #revisar en train se guarde así
+best_model_path = os.path.join(results_path, "best_model.pth")
 
 model = AtrialMorphNet(latent_dim=latent_dim, num_points=num_points).to(device)
 
 state_dict = torch.load(best_model_path, map_location=device)
 model.load_state_dict(state_dict)
 model.eval()
-print(f"Mejor modelo cargado desde: {best_model_path}")
+print(f"Best model saved in folder: {best_model_path}")
 
 patient_a = ""  #Name patient a in .ny (only the name of the document!!)
 patient_b = ""  #Name patient b in .ny (only the name of the document!!)
@@ -59,7 +59,7 @@ def plot_interpolation_sequence(pointclouds, titles, save_path):
     plt.tight_layout()
     plt.savefig(save_path, dpi=200)
     plt.close()
-    print(f"Figura de interpolación guardada en: {save_path}")
+    print(f"Figure saved in: {save_path}")
 
 
 mu_a = np.load(os.path.join(latent_dir, f"{name_a}.npy"))
